@@ -1,0 +1,44 @@
+## datasource property
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/srv
+    username: postgres
+    password: thrymr@123
+
+## hibernate properties
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        show-sql: true
+        format-sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        jdbc.lob.non_contextual_creation: true
+        
+
+        
+        
+## logging properties
+logging:
+  level: 
+    root: info
+  file: mylog.log
+  
+      
+# redis properties
+  redis:
+    host: localhost
+    port: 6379
+#    password: root
+    
+# for redis pooling
+    lettuce:
+      pool:
+        max-active: 7
+        max-idle: 7
+        min-idle: 2
+        max-wait: -1ms
+        
+    

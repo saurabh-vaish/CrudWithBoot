@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org/">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}">
+    <style>
+        .error {
+            color: red;
+        }
+    </style>
+
+</head>
+
+<body>
+
+
+<!-- on error toast -->
+ <div class="row justify-content-end">
+        <div class="col" style=" position: absolute;z-index: 10;top:10%">
+
+            <!-- Then put toasts within -->
+            <div class="toast toast-error" role="alert" aria-live="assertive" aria-atomic="true" data-delay="3000"
+                data-autohide="true">
+                <div class="toast-header bg-danger">
+                    <img th:src="@{/image/cross.gif}" class="rounded mr-2" style="height: 40px;">
+                    <strong class="mr-auto text-white lead">Error </strong>
+
+                    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="toast-body">
+                		<span th:if="${emsg} ==null"> Please Enter Valid Details !! </span>
+                 	 <span th:text=${emsg}></span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="container bg-light">
+        <div class="row">
+
+            <div class="col align-self-center">
+
+                <div class="mt-5">
+
+                    <div class="card">
+                        <div class="card-header bg-info">
+                            <h2 class="text-center  text-white">
+                                Update Employee
+                            </h2>
+                        </div>
+
+                        <form th:action="@{/updateEmployee}" method="post" name="myform" th:object="${employee}" onsubmit="return validate()" onreset="return reset1()" >
+                            <div class="card-body bg-light">
+								
+								<div class="form-group">
+                                    <label for="empId">Id</label>
+                                    <input type="text" th:field="*{empId}" class="form-control"
+                                         readonly="true" />
+                                   
+                                </div>
+			
+                                <div class="form-group">
+                                    <label for="name">Full Name</label>
+                                    <input type="text" th:field="*{empName}" class="form-control"
+                                        placeholder="Enter Your Name" onchange="checkName()" />
+                                    <span id="ename" class="error form-text"></span>
+                                    <span th:errors="*{empName}" id="ename" class="error form-text"></span>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="username">User Name</label>
+                                    <input type="text" th:field="*{empUserName}" class="form-control"
+                                        placeholder="Enter Your Username " onchange="checkUserName()" />
+                                    <span  id="euname" class="error form-text"></span>
+                                     <span th:errors="*{empUserName}" id="euname" class="error form-text"></span>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="text" th:field="*{empEmail}" class="form-control"
+                                        placeholder="Enter Your  Email" onchange="checkEmail()" />
+                                    <span  id="ermail" class="error form-text"></span>
+                                    <span th:errors="*{empEmail}" id="ermail" class="error form-text"></span>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="mobile">Mobile No.</label>
+                                    <input type="text" th:field="*{empMobile}" class="form-control"
+                                        placeholder="Enter Your Mobile No " onchange="checkMobile()" />
+                                    <span  id="emobile" class="error form-text"></span>
+									<span th:errors="*{empMobile}" id="emobile" class="error form-text"></span>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="empCountry">Country</label>
+                                    <input type="text" th:field="*{empCountry}" class="form-control"
+                                        placeholder="Enter Your Country " onchange="checkCountry()" />
+                                     <span  id="ecountry" class="error form-text"></span>
+                                    <span th:errors="*{empCountry}" id="ecountry" class="error form-text"></span>
+                                </div>
+                                
+                                <div class="form-group " id="hstate" hidden>
+                                    <label for="empState">State</label>
+                                     <input type="text" th:field="*{empState}" class="form-control"
+                                        placeholder="Enter Your State " onchange="checkState()" />
+                                    <span  id="estate" class="error form-text"></span>
+                                    <span th:errors="*{empState}" id="estate" class="error form-text"></span>
+                                   
+                                </div>
+                                <div class="form-group " id="hcity" hidden>
+                                    <label for="empCity">City</label>
+                                   <input type="text" th:field="*{empCity}" class="form-control"
+                                        placeholder="Enter Your City " onchange="checkCity()" />
+                                    <span id="ecity" class="error form-text"></span>
+                                    <span th:errors="*{empCity}" id="ecity" class="error form-text"></span>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="street">Street Address</label>
+                                    <textarea th:field="*{empAddress}" class="form-control" onchange="checkStreet()"
+                                        placeholder="Enter Your Street Address. "></textarea>
+                                    <span id="estreet" class="error form-text"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="pincode">Pincode</label>
+                                    <input type="text" th:field="*{empPincode}" class="form-control"
+                                        placeholder="Enter Your Pincode " onchange="checkPincode()" />
+                                    <span  id="epincode" class="error form-text"></span>
+                                    <span th:errors="*{empPincode}" id="epincode" class="error form-text"></span>
+                                </div>
+
+
+                            </div>
+                            <div class="card-footer bg-dark">
+                                <div class="row">
+                                    <div class="col">
+                                        <input type="submit" class="btn btn-block btn-success" value="Submit" />
+                                    </div>
+                                    <div class="col">
+                                        <input type="reset" class="btn btn-block btn-secondary" value="Reset" />
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+   
+    
+
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/validate.js}"></script>
+    
+   
+
+</body>
+
+</html>
