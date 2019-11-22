@@ -1,6 +1,7 @@
 package com.app.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,9 +36,9 @@ public class AppUserServiceImpl implements AppUserService {
 		app.setUserPassword(enc.encode(user.getUserPassword()));
 		app.setUserRoles(user.getUserRoles());
 		
-//		AppUser savedUser = repo.save(app);
+		AppUser savedUser = repo.save(app);
 
-//		user.setUserId(savedUser.getUserId());
+		user.setUserId(savedUser.getUserId());
 		user.setUserId(1);
 		
 		return user;
@@ -47,17 +48,20 @@ public class AppUserServiceImpl implements AppUserService {
 	@Transactional
 	public Integer updateAppUser(AppUserDto user) {
 
+		Optional<AppUser> appuser =  repo.findById(user.getUserId());
 		AppUser app = new AppUser();
-		app.setUserId(user.getUserId());
+		
+		if(appuser.isPresent())
+		{
+			app = appuser.get();
+		}
+		
 		app.setUserName(user.getUserName());
 		app.setUserEmail(user.getUserEmail());
-		app.setUserPassword(user.getUserPassword());
 		app.setUserRoles(user.getUserRoles());
 		
-		AppUser savedUser = repo.save(app);
+		repo.save(app);
 
-		user.setUserId(savedUser.getUserId());
-		
 		return user.getUserId();
 	}
 
@@ -101,8 +105,8 @@ public class AppUserServiceImpl implements AppUserService {
 			
 			AppUserDto app = new AppUserDto();
 			app.setUserId(user.getUserId());
-			app.setUserEmail(user.getUserEmail());
 			app.setUserName(user.getUserName());
+			app.setUserEmail(user.getUserEmail());
 			app.setUserPassword(user.getUserPassword());
 			app.setUserRoles(user.getUserRoles());
 			
@@ -112,8 +116,22 @@ public class AppUserServiceImpl implements AppUserService {
 
 	@Override
 	public AppUserDto getOneAppUser(Integer userId) {
-		// TODO Auto-generated method stub
-		return null;
+
+		Optional<AppUser> app =  repo.findById(userId);
+		AppUserDto dto = null;
+		if(app.isPresent())
+		{
+			AppUser user = app.get();
+			
+			 dto = new AppUserDto();
+			dto.setUserId(user.getUserId());
+			dto.setUserName(user.getUserName());
+			dto.setUserEmail(user.getUserEmail());
+			dto.setUserPassword(null);
+			dto.setUserRoles(user.getUserRoles());
+			
+		}
+		return dto;
 	}
 
 

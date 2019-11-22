@@ -3,14 +3,11 @@ package com.app.controller.rest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.dto.AppUserDto;
-import com.app.dto.EmployeeDto;
+import com.app.exception.AppUserNotFoundException;
 import com.app.exception.EmployeeNotFoundException;
 import com.app.service.AppUserService;
 
@@ -62,20 +59,19 @@ public class AdminController {
 	@PostMapping("/register")
 	public ResponseEntity<Object> regsiterUser(@RequestBody AppUserDto appUserDto)
 	{
+		Map<String,String> map = new HashMap<>();
 		if(appUserDto.getUserName() !=null)
 		{
 			if(service.getAppUserByUserName(appUserDto.getUserName()).isEmpty())
 			{
 				AppUserDto dto = service.saveAppUser(appUserDto);
 				
-				Map<String,String> map = new HashMap<>();
 				map.put("msg", "App User with Id :"+ dto.getUserId() +"saved successfully !");
 			
 				return new ResponseEntity<>(map,HttpStatus.OK);
 			}
 			else
 			{
-				Map<String,String> map = new HashMap<>();
 				map.put("msg", "Duplicate User Name");
 			
 				return new ResponseEntity<>(map,HttpStatus.BAD_REQUEST);
@@ -83,7 +79,6 @@ public class AdminController {
 		}
 		else
 		{
-			Map<String,String> map = new HashMap<>();
 			map.put("msg", "App User Details are not correct");
 		
 			return new ResponseEntity<>(map,HttpStatus.BAD_REQUEST);
@@ -95,7 +90,7 @@ public class AdminController {
 	// view one employee
 	
 	@GetMapping("/viewOne/{userId}")
-	public ResponseEntity<AppUserDto> viewOneEmployee(@PathVariable Integer userId)
+	public ResponseEntity<AppUserDto> viewOneUser(@PathVariable Integer userId)
 	{
 		if(service.checkAppUser(userId))
 		{
@@ -103,7 +98,7 @@ public class AdminController {
 		}
 		else
 		{
-			throw new EmployeeNotFoundException("No Employee Found");
+			throw new AppUserNotFoundException("No App User Found");
 		}
 	}
 	
@@ -120,41 +115,58 @@ public class AdminController {
 	
 	// update employee
 	
-	@PostMapping("/update")
-	public ResponseEntity<String> updateEmployee(@RequestBody EmployeeDto employeeDto)
+	@PostMapping("/updateAdmin")
+	public ResponseEntity<Object> updateAppUser(@RequestBody AppUserDto appUserDto)
 	{
-		if(employeeDto.getEmpEmail() !=null)
+		Map<String,String> map = new HashMap<>();
+		
+		if(appUserDto.getUserName() !=null)
 		{
+			if(service.checkAppUser(appUserDto.getUserId()))
+			{
+				Integer id = service.updateAppUser(appUserDto);
+				
+				map.put("msg", "App User with Id :"+ id +" updated successfully !");
 			
-//				EmployeeDto dto = service.updateEmployee(employeeDto);
-//				return new ResponseEntity<String>("Employee with Id :"+ dto.getEmpId() +" Upadted successfully !",HttpStatus.OK);
+				return new ResponseEntity<>(map,HttpStatus.OK);
+			}
+			else
+			{
+				map.put("msg", "No AppUser Found With that Id");
+			
+				return new ResponseEntity<>(map,HttpStatus.BAD_REQUEST);
+			}
 		}
 		else
 		{
-			return new ResponseEntity<String>("Employee Details are not correct",HttpStatus.BAD_REQUEST);
+			map.put("msg", "App User Details are not correct");
+		
+			return new ResponseEntity<>(map,HttpStatus.BAD_REQUEST);
 		}
-		return null;
 		
 	}
 	
 	
 	// delete Employee 
 	
-	@GetMapping("/delete/{empId}")
-	public ResponseEntity<String> deleteEmployee(@PathVariable Integer empId)
+	@DeleteMapping("/delete/{userId}")
+	public ResponseEntity<Object> deleteAppUser(@PathVariable Integer userId)
 	{
-//		if(service.checkEmployee(empId))
-//		{
-//			service.deleteEmployee(empId);
-//			
-//			return new ResponseEntity<String>("Employee Deleted SuccessFully with Given Id :"+empId,HttpStatus.OK);
-//						
-//		}
-//		else
-//		{
-//			throw new EmployeeNotFoundException();
-//		}
-		return null;
+		Map<String,String> map = new HashMap<>();
+		
+		if(service.checkAppUser(userId))
+		{
+			service.deleteAppUser(userId);
+			
+			map.put("msg", "user Deleted Successfully ");
+			
+			return new ResponseEntity<>(map,HttpStatus.OK);
+						
+		}
+		else
+		{
+			throw new AppUserNotFoundException("No App User Found");
+		}
 	}
 	
 	

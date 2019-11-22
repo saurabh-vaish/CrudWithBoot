@@ -28,6 +28,8 @@ public class EmployeeDto {
 	private String empAddress;
 
 	private Integer empPincode;
+	
+	private String empPassword;
 
 	public EmployeeDto(Integer empId) {
 		super();

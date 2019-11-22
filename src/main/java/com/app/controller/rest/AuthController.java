@@ -79,7 +79,7 @@ public class AuthController {
 		}
 		catch (BadCredentialsException e)
 		{
-			throw new  BadCredentialsException("Invalid Username & Password");
+			throw new BadCredentialsException("Invalid Username & Password");
 		}
 	}
 

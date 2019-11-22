@@ -20,6 +20,14 @@ public class EmployeeExceptionHandler {
 		return new ResponseEntity<ApiError>(error,HttpStatus.BAD_REQUEST);
 	}
 
+	@ExceptionHandler(AppUserNotFoundException.class)
+	public ResponseEntity<ApiError> handleAppUserNotFoundException()
+	{
+		ApiError error = new ApiError(HttpStatus.BAD_REQUEST.value(),"No AppUser Found Of Given Id" , LocalDateTime.now());
+		
+		return new ResponseEntity<ApiError>(error,HttpStatus.BAD_REQUEST);
+	}
+
 	
 	@ExceptionHandler(BadCredentialsException.class)
 	public ResponseEntity<ApiError> handleInvalidCredentialException()

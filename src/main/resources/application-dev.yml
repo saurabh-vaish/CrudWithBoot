@@ -23,7 +23,7 @@ spring:
 ## logging properties
 logging:
   level: 
-    root: info
+    root: error
   file: mylog.log
   
       

@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +23,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Autowired
 	private EmployeeRepository repo;
 
+	@Autowired
+	private SCryptPasswordEncoder enc;
+
 
 	@Override
 	@Transactional
@@ -29,15 +33,16 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 		Employee e = new Employee();
 		e.setEmpId(emp.getEmpId());
-		e.setEmpAddress(emp.getEmpAddress());
-		e.setEmpCity(emp.getEmpCity());
-		e.setEmpCountry(emp.getEmpCountry());
+		e.setEmpUserName(emp.getEmpUserName());
+		e.setEmpName(emp.getEmpName());
 		e.setEmpEmail(emp.getEmpEmail());
 		e.setEmpMobile(emp.getEmpMobile());
-		e.setEmpName(emp.getEmpName());
-		e.setEmpPincode(emp.getEmpPincode());
+		e.setEmpAddress(emp.getEmpAddress());
+		e.setEmpCity(emp.getEmpCity());
 		e.setEmpState(emp.getEmpState());
-		e.setEmpUserName(emp.getEmpUserName());
+		e.setEmpCountry(emp.getEmpCountry());
+		e.setEmpPincode(emp.getEmpPincode());
+		e.setEmpPassword(enc.encode(emp.getEmpPassword()));
 
 		Employee savedEmpl = repo.save(e);
 
@@ -52,15 +57,16 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 		Employee e = new Employee();
 		e.setEmpId(emp.getEmpId());
-		e.setEmpAddress(emp.getEmpAddress());
-		e.setEmpCity(emp.getEmpCity());
-		e.setEmpCountry(emp.getEmpCountry());
+		e.setEmpUserName(emp.getEmpUserName());
+		e.setEmpName(emp.getEmpName());
 		e.setEmpEmail(emp.getEmpEmail());
 		e.setEmpMobile(emp.getEmpMobile());
-		e.setEmpName(emp.getEmpName());
-		e.setEmpPincode(emp.getEmpPincode());
+		e.setEmpAddress(emp.getEmpAddress());
+		e.setEmpCity(emp.getEmpCity());
 		e.setEmpState(emp.getEmpState());
-		e.setEmpUserName(emp.getEmpUserName());
+		e.setEmpCountry(emp.getEmpCountry());
+		e.setEmpPincode(emp.getEmpPincode());
+		e.setEmpPassword(emp.getEmpPassword());
 
 		Employee savedEmpl = repo.save(e);
 
@@ -89,6 +95,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 			employee.setEmpPincode(e.getEmpPincode());
 			employee.setEmpState(e.getEmpState());
 			employee.setEmpUserName(e.getEmpUserName());
+			employee.setEmpPassword(null);
 
 			return employee;
 		}
@@ -112,6 +119,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 			employee.setEmpPincode(e.getEmpPincode());
 			employee.setEmpState(e.getEmpState());
 			employee.setEmpUserName(e.getEmpUserName());
+			employee.setEmpPassword(null);
 			
 			return employee;
 		}).collect(Collectors.toList());
@@ -147,6 +155,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 			employee.setEmpPincode(e.getEmpPincode());
 			employee.setEmpState(e.getEmpState());
 			employee.setEmpUserName(e.getEmpUserName());
+			employee.setEmpPassword(null);
 			
 			return employee;
 		}).collect(Collectors.toList());
