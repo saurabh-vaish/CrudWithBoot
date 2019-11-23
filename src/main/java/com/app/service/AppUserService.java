@@ -3,6 +3,7 @@ package com.app.service;
 import java.util.List;
 
 import com.app.dto.AppUserDto;
+import com.app.dto.EmployeeDto;
 
 public interface AppUserService {
 
@@ -19,6 +20,11 @@ public interface AppUserService {
 	public Boolean checkAppUser(Integer userId);
 	
 	public List<AppUserDto> getAppUserByUserName(String username);
+
+	public List<EmployeeDto> getAllUnApprovedEmployee();
+
+	public Integer approveEmployeeRequest(Integer empId);
+
 	 
 	
 }

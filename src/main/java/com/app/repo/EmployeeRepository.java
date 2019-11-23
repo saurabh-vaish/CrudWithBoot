@@ -10,4 +10,6 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 	
 	List<Employee> findByEmpUserName(String empUserName);
 
+	List<Employee> findByApproved(Boolean approved);
+	
 }

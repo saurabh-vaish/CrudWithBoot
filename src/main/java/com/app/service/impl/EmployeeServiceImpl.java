@@ -96,6 +96,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 			employee.setEmpState(e.getEmpState());
 			employee.setEmpUserName(e.getEmpUserName());
 			employee.setEmpPassword(null);
+			employee.setEmpApproved(e.getApproved());
 
 			return employee;
 		}
@@ -107,6 +108,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Transactional(readOnly = true)
 	public List<EmployeeDto> getAllEmployees() {
 		return repo.findAll(Sort.by(Direction.ASC,"empId")).parallelStream().map(e-> {
+			
+			System.out.println(e);
 			
 			EmployeeDto employee = new EmployeeDto();
 			employee.setEmpId(e.getEmpId());
@@ -120,6 +123,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 			employee.setEmpState(e.getEmpState());
 			employee.setEmpUserName(e.getEmpUserName());
 			employee.setEmpPassword(null);
+			employee.setEmpApproved(e.getApproved());
 			
 			return employee;
 		}).collect(Collectors.toList());
@@ -156,10 +160,19 @@ public class EmployeeServiceImpl implements EmployeeService {
 			employee.setEmpState(e.getEmpState());
 			employee.setEmpUserName(e.getEmpUserName());
 			employee.setEmpPassword(null);
+			employee.setEmpApproved(e.getApproved());
 			
 			return employee;
 		}).collect(Collectors.toList());
 	}
+
+	@Override
+	public Integer countUnApproved() {
+		return repo.findByApproved(false).size();
+	}
+	
+	
+	
 
 
 }

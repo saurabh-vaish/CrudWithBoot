@@ -30,6 +30,8 @@ public class EmployeeDto {
 	private Integer empPincode;
 	
 	private String empPassword;
+	
+	private Boolean empApproved ;
 
 	public EmployeeDto(Integer empId) {
 		super();

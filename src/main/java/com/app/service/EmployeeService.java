@@ -19,6 +19,8 @@ public interface EmployeeService {
 	public Boolean checkEmployee(Integer empId);
 	
 	public List<EmployeeDto> getEmployeeByUserName(String username);
+
+	public Integer countUnApproved();
 	 
 	
 }

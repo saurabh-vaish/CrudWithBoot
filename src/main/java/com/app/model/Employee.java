@@ -42,5 +42,7 @@ public class Employee {
 	private Integer empPincode;
 	
 	private String empPassword;
+	
+	private Boolean approved = false;
 
 }
