@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+<head>
+<meta charset="UTF-8">
+<title>Employee</title>
+
+ <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}">
+ <link rel="stylesheet" th:href="@{/font-awesome-4/css/font-awesome.min.css}">
+ 
+</head>
+<body>
+
+
+	
+	<div class="container mt-5">
+	
+	
+	<div class="card bg-light">
+		
+		<div class="card-header bg-info">
+			<h3>Welcome To Employee Data Page</h3>
+		</div>
+		<div class="card-body">
+			
+			<span th:if="${emp==null}">
+				
+				<span class="lead">
+					No Data Found
+				</span>
+				
+			</span>
+		
+		<table th:if="${emp}" class="table table-striped table-bordered table-hover text-center">
+			
+			<tr >
+				<th>Employee Id</th> <td th:text="${emp.empId}"></td>
+			</tr>
+			<tr>
+				<th>Employee Name</th> <td th:text="${emp.empName}"></td>
+			</tr>
+			<tr>
+				<th>Employee User Name</th> <td th:text="${emp.empUserName}"></td>
+			</tr>
+			<tr>
+				<th>Employee Email</th> <td th:text="${emp.empEmail}"></td>
+			</tr>
+			<tr>
+				<th>Employee Mobile</th> <td th:text="${emp.empMobile}"></td>
+			</tr>
+			<tr>	
+				<th>Employee Country</th> <td th:text="${emp.empCountry}"></td>
+			</tr>
+			<tr>	
+				<th>Employee State</th> <td th:text="${emp.empState}"></td>
+			</tr>
+			<tr>	
+				<th>Employee City</th> <td th:text="${emp.empCity}"></td>
+			</tr>
+			<tr>	
+				<th>Employee Address</th> <td th:text="${emp.empAddress}"></td>
+			</tr>
+			<tr>	
+				<th>Employee Pincode</th> <td th:text="${emp.empPincode}"></td>
+			</tr>
+			
+			<tr>
+				<td>
+					<a class="btn btn-block btn-success" th:href="@{/update/{id}(id=${emp.empId})}" > Update <i class="fa fa-pencil"></i> </a>
+					
+				 </td>
+				<td>
+				<a class="btn btn-block btn-danger" data-toggle="modal" data-target="#delete" > Delete <i class="fa fa-trash"></i> </a>
+				</td>
+			</tr>	
+				
+				
+		
+		</table>
+		
+				
+		<!-- delete Modal -->
+		<div class="modal" id="delete">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		
+		      <!-- Modal Header -->
+		      <div class="modal-header bg-danger">
+		        <h4 class="modal-title">Delete Employee</h4>
+		        <button type="button" class="close" data-dismiss="modal">&times;</button>
+		      </div>
+		
+		      <!-- Modal body -->
+		      <div class="modal-body">
+		       Sure ! You want to delete
+		      </div>
+				<hr>
+		      <!-- Modal footer -->
+		      <div class="modal-footer container" style="display:block">
+		      	<div class="row">
+		      		<div class="col-6">
+				        <a class="btn btn-danger btn-block" th:href="@{/delete/{id}(id=${emp.empId})}">Yes</a>
+		      		</div>
+		      		<div class="col-6">
+				        <button type="button" class="btn btn-success btn-block" data-dismiss="modal" >No</button>
+		      		</div>
+		      	</div>
+		      
+		      </div>
+		
+		    </div>
+		  </div>
+		</div>
+				
+		
+		</div>
+		<div class="card-footer">
+		
+		</div>
+		
+	</div>
+	
+	
+	
+	
+	
+	</div>
+	
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+    
+	 <span th:if="${smsg}!=null">
+    	
+    	<script>
+    			  $('.toast-success').toast('show');
+    		
+    	</script>
+    	
+    </span>
+	
+</body>
+</html>

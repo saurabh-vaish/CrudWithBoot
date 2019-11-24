@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/">
+<head>
+<meta charset="UTF-8">
+<title>Employee</title>
+
+ <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.min.css}">
+ 
+</head>
+<body>
+
+	
+	<div class="container mt-5">
+	
+		<h3 class="text-center"> Welcome</h3>
+		
+		<a class="btn btn-success btn-block" th:href="@{/register}"  >Register Employee</a> <br>
+		
+		
+		<a class="btn btn-primary btn-block" th:href="@{/all}" >Show All Employee</a> <br>
+		
+		
+	</div>
+	
+	
+	
+	
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+    
+	 <span th:if="${smsg}!=null">
+    	
+    	<script>
+    			  $('.toast-success').toast('show');
+    		
+    	</script>
+    	
+    </span>
+	
+</body>
+</html>
