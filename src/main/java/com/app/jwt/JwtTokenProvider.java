@@ -1,14 +1,11 @@
 package com.app.jwt;
 
-import java.util.Arrays;
-import java.util.Base64;
-import java.util.Date;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpServletRequest;
-
+import com.app.constants.AppConstants;
+import com.app.util.EncoderDecoderUtil;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -17,11 +14,13 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import com.app.constants.AppConstants;
-
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
+import java.util.Base64;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 
@@ -34,6 +33,8 @@ public class JwtTokenProvider {
 
 	private String secretKey = "mySecret";
 
+	@Autowired
+	private EncoderDecoderUtil util;
 
 	/**
 	 * Encoded secret 
@@ -107,10 +108,11 @@ public class JwtTokenProvider {
 	}
 
 
-	public String getNameFromHeader(HttpServletRequest req)
-	{
+	public String getNameFromHeader(HttpServletRequest req) throws Exception {
 		// get token header , return null if not present
-		String nameHeader = req.getHeader("UserName");
+		String name = req.getHeader("UserName");
+
+		String nameHeader = name !=null ? util.decrypt(name) : null;
 
 		if(nameHeader !=null)  // check token not null & start with given prefix
 		{
