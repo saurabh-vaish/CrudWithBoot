@@ -1,7 +1,5 @@
 package com.app.util;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 public class EDTest {
 
 
@@ -9,9 +7,11 @@ public class EDTest {
 
 		EncoderDecoderUtil util = new EncoderDecoderUtil();
 
-//		System.out.println(util.encrypt("srv"));
+
+
+		System.out.println(util.encrypt("srv"));
 //		System.out.println(util.decrypt("/BoVAG8TAc4onLArNAB6Vw=="));
-		System.out.println("jj");
+//		System.out.println("F7BB97D6707E448CCA96F1BDCAE88113".getBytes().length);
 	}
 
 

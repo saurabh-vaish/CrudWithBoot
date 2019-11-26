@@ -17,9 +17,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class EncoderDecoderUtil   {
 
-	 private static final String SECRET_KEY_1 = "ssdkF$HUy2A#D%kd";
-	    private static final String SECRET_KEY_2 = "weJiSEvR5yAC5ftB";
-	 
+	 private static final String SECRET_KEY_1 = "E3F4F5116C46A6EB";  // for iv
+//	    private static final String SECRET_KEY_2 = "weJiSEvR5yAC5ftB";
+	    private static final String SECRET_KEY_2 = "F7BB97D6707E448CCA96F1BDCAE88113"; // for key
+
 	    private IvParameterSpec ivParameterSpec;
 	    private SecretKeySpec secretKeySpec;
 	    private Cipher cipher;
